@@ -1,9 +1,6 @@
 # Less is More: Recursive Reasoning with Tiny Networks
 
-This is the codebase for the paper: "Less is More: Recursive Reasoning with Tiny Networks". TRM is a recursive reasoning approach that achieves amazing scores of 45% on ARC-AGI-1 and 8% on ARC-AGI-2 using a tiny 7M parameters neural network.
-
-[Paper](https://arxiv.org/abs/2510.04871)
-
+This repository is a reproduction and experimental verification of the paper “Less is More: Recursive Reasoning with Tiny Networks” by [Alexia Jolicoeur-Martineau (2025)](https://arxiv.org/abs/2510.04871)
 
 <p align="center">
   <img src="https://AlexiaJM.github.io/assets/images/TRM_fig.png" alt="TRM"  style="width: 30%;">
@@ -11,6 +8,8 @@ This is the codebase for the paper: "Less is More: Recursive Reasoning with Tiny
 
 Tiny Recursion Model (TRM) recursively improves its predicted answer y with a tiny network. It starts with the embedded input question x and initial embedded answer y and latent z. For up to K improvements steps, it tries to improve its answer y. It does so by i) recursively updating n times its latent z given the question x, current answer y, and current latent z (recursive reasoning), and then ii) updating its answer y given the current answer y and current latent z. This recursive process allows the model to progressively improve its answer (potentially addressing any errors from its previous answer) in an extremely parameter-efficient manner while minimizing overfitting.
 
+This repository is not an official implementation.
+It is maintained solely for research reproduction. For the official version, please visit [SamsungSAILMontreal/TinyRecursiveModels](https://github.com/SamsungSAILMontreal/TinyRecursiveModels)
 
 ### Dataset Preparation
 
@@ -116,17 +115,8 @@ arch.H_cycles=3 arch.L_cycles=4 \
 
 *Runtime:* 2h
 
-## Reference
+## Reproduction Results
 
-```bibtex
-@misc{jolicoeurmartineau2025morerecursivereasoningtiny,
-      title={Less is More: Recursive Reasoning with Tiny Networks}, 
-      author={Alexia Jolicoeur-Martineau},
-      year={2025},
-      eprint={2510.04871},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2510.04871}, 
-}
-```
-(https://github.com/arcprize/hierarchical-reasoning-model-analysis).
+
+
+
