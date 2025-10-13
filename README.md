@@ -1,14 +1,6 @@
 # Less is More: Recursive Reasoning with Tiny Networks
 
-This repository is a reproduction and experimental verification of the paper “Less is More: Recursive Reasoning with Tiny Networks” by [Alexia Jolicoeur-Martineau (2025)](https://arxiv.org/abs/2510.04871)
-
-<p align="center">
-  <img src="https://AlexiaJM.github.io/assets/images/TRM_fig.png" alt="TRM"  style="width: 30%;">
-</p>
-
-This repository is not an official implementation.
-It is maintained solely for research reproduction. For the official version, please visit [SamsungSAILMontreal/TinyRecursiveModels](https://github.com/SamsungSAILMontreal/TinyRecursiveModels)
-
+This repository is a reproduction and experimental verification of the paper “Less is More: Recursive Reasoning with Tiny Networks” by [Alexia Jolicoeur-Martineau (2025)](https://arxiv.org/abs/2510.04871). This repository is not an official implementation. It is maintained solely for research reproduction. For the official version, please visit [SamsungSAILMontreal/TinyRecursiveModels](https://github.com/SamsungSAILMontreal/TinyRecursiveModels)
 
 ## Experiments
 
@@ -103,6 +95,8 @@ arch.H_cycles=3 arch.L_cycles=6 \
 +run_name=${run_name} ema=True
 ```
 *Runtime:* 40min
+<img width="1504" height="786" alt="image" src="https://github.com/user-attachments/assets/0f6ba0eb-5bad-491a-8d4b-f3a0e7cb6909" />
+<img width="1505" height="1174" alt="image" src="https://github.com/user-attachments/assets/e86a3205-f556-4a86-8e9a-da7e50e2acf9" />
 
 #### Maze-Hard:
 ```bash
@@ -118,3 +112,7 @@ arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 ```
 *Runtime:* 2h
+<img width="1514" height="792" alt="image" src="https://github.com/user-attachments/assets/14b321ea-48a7-4c13-ac8b-0a7ec8dea600" />
+<img width="1515" height="1186" alt="image" src="https://github.com/user-attachments/assets/60f8865e-cede-46c5-8394-c6d68d8d5e34" />
+
+
