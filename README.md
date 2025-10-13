@@ -55,6 +55,8 @@ arch.H_cycles=3 arch.L_cycles=4 \
 
 ```
 *Runtime:* 15~16h
+<img width="1565" height="783" alt="image" src="https://github.com/user-attachments/assets/1cf6690a-a7f9-4d26-82c2-7a3335f8e9c8" />
+<img width="1565" height="1181" alt="image" src="https://github.com/user-attachments/assets/5895a506-7234-406d-abad-64c71f82c547" />
 
 #### ARC-AGI-2
 ```bash
@@ -68,6 +70,9 @@ arch.H_cycles=3 arch.L_cycles=4 \
 
 ```
 *Runtime:* 23~24h
+<img width="1503" height="791" alt="image" src="https://github.com/user-attachments/assets/654d3954-3bca-4998-a005-0590bca8f011" />
+<img width="1502" height="1182" alt="image" src="https://github.com/user-attachments/assets/d17f5a1e-387b-4150-a5b6-3f2ff93f98d9" />
+
 
 #### Sudoku-Extreme:
 ```bash
