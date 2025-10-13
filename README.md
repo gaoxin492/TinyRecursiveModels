@@ -8,8 +8,8 @@ This repository is a reproduction and experimental verification of the paper “
 
 | Method | Params | Sudoku | Maze | ARC-1 (@2) | ARC-2 (@2) |
 | --- | --- | --- | --- | --- | --- |
-| TRM-Att | 7M | 77.73 | 78.70 | 38.50  | 3.33 |
-| TRM-MLP | 5M | 84.73 | / | / | / |
+| TRM-Att | 7M | 77.71 | 78.70 | 38.50  | 3.33 |
+| TRM-MLP | 5M | 84.80 | / | / | / |
 
 In the first training run, I didn’t plot the pass@k curves — I’ll include them in the next updated results. For the ARC experiments, I have increased the number of training epochs, and the performance is expected to improve further.
 
