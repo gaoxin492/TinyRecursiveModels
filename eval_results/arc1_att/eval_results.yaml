@@ -1,0 +1,13 @@
+ARC/pass@1: 0.34375
+ARC/pass@10: 0.45875
+ARC/pass@100: 0.515
+ARC/pass@1000: 0.52875
+ARC/pass@2: 0.385
+ARC/pass@5: 0.4375
+all:
+  accuracy: 0.8600608452237472
+  exact_accuracy: 0.26497155372393505
+  lm_loss: 0.8092149086997654
+  q_halt_accuracy: 0.7300571517437113
+  q_halt_loss: 1.2211830799735626
+  steps: 16.0

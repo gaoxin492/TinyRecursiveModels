@@ -25,6 +25,8 @@ from models.sparse_embedding import CastedSparseEmbeddingSignSGD_Distributed
 from models.ema import EMAHelper
 
 
+
+
 class LossConfig(pydantic.BaseModel):
     model_config = pydantic.ConfigDict(extra='allow')
     name: str
@@ -575,8 +577,10 @@ def launch(hydra_config: DictConfig):
 
     try:
         evaluators = create_evaluators(config, eval_metadata)
-    except:
-        print("No evaluator found")
+    except Exception as e:
+        import traceback
+        print("No evaluator found:", repr(e))
+        traceback.print_exc()
         evaluators = []
 
     # Train state
@@ -631,6 +635,7 @@ def launch(hydra_config: DictConfig):
                 rank=RANK, 
                 world_size=WORLD_SIZE,
                 cpu_group=CPU_PROCESS_GROUP)
+
 
             if RANK == 0 and metrics is not None:
                 wandb.log(metrics, step=train_state.step)

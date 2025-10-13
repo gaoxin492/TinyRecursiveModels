@@ -1,0 +1,7 @@
+all:
+  accuracy: 0.9419783294621865
+  exact_accuracy: 0.8479821943016088
+  lm_loss: 0.1348423759301396
+  q_halt_accuracy: 0.9994891032342603
+  q_halt_loss: 0.010644186161852568
+  steps: 16.0

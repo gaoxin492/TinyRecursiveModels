@@ -1,0 +1,19 @@
+defaults:
+  - arch: trm
+  - _self_
+
+hydra:
+  output_subdir: null
+
+# Data path
+data_paths: ['data/arc2concept-aug-1000']
+data_paths_test: []
+
+evaluators:
+  - name: arc@ARC
+
+
+global_batch_size: 4608 # 2304 #768
+load_checkpoint: /mnt/shared-storage-user/gaoxin1/project/TinyRecursiveModels/checkpoints/Arc2concept-aug-1000-ACT-torch/pretrain_att_arc2concept_8/step_96712
+checkpoint_path: ./eval_results
+seed: 0
