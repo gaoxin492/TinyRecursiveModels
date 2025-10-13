@@ -6,41 +6,32 @@ This repository is a reproduction and experimental verification of the paper “
   <img src="https://AlexiaJM.github.io/assets/images/TRM_fig.png" alt="TRM"  style="width: 30%;">
 </p>
 
-Tiny Recursion Model (TRM) recursively improves its predicted answer y with a tiny network. It starts with the embedded input question x and initial embedded answer y and latent z. For up to K improvements steps, it tries to improve its answer y. It does so by i) recursively updating n times its latent z given the question x, current answer y, and current latent z (recursive reasoning), and then ii) updating its answer y given the current answer y and current latent z. This recursive process allows the model to progressively improve its answer (potentially addressing any errors from its previous answer) in an extremely parameter-efficient manner while minimizing overfitting.
-
 This repository is not an official implementation.
 It is maintained solely for research reproduction. For the official version, please visit [SamsungSAILMontreal/TinyRecursiveModels](https://github.com/SamsungSAILMontreal/TinyRecursiveModels)
 
-### Dataset Preparation
-
-```bash
-# ARC-AGI-1
-python -m dataset.build_arc_dataset \
-  --input-file-prefix kaggle/combined/arc-agi \
-  --output-dir data/arc1concept-aug-1000 \
-  --subsets training evaluation concept \
-  --test-set-name evaluation
-
-# ARC-AGI-2
-python -m dataset.build_arc_dataset \
-  --input-file-prefix kaggle/combined/arc-agi \
-  --output-dir data/arc2concept-aug-1000 \
-  --subsets training2 evaluation2 concept \
-  --test-set-name evaluation2
-
-## Note: You cannot train on both ARC-AGI-1 and ARC-AGI-2 and evaluate them both because ARC-AGI-2 training data contains some ARC-AGI-1 eval data
-
-# Sudoku-Extreme
-python dataset/build_sudoku_dataset.py --output-dir data/sudoku-extreme-1k-aug-1000  --subsample-size 1000 --num-aug 1000  # 1000 examples, 1000 augments
-
-# Maze-Hard
-python dataset/build_maze_dataset.py # 1000 examples, 8 augments
-```
 
 ## Experiments
 
-### ARC-AGI-1 (8 × H200, global_batch_size=4608):
+The file `pretrain.py` has been slightly modified to handle missing evaluators gracefully:
+```python
+    try:
+        evaluators = create_evaluators(config, eval_metadata)
+    except Exception as e:
+        import traceback
+        print("No evaluator found:", repr(e))
+        traceback.print_exc()
+        evaluators = []
+```
 
+In addition to evaluation during training, a standalone evaluation script `run_eval.py` has been added. This script allows loading checkpoints and running evaluation separately. We report exact accuracy for Maze and Sudoku, and pass@k for ARC.
+```bash
+torchrun --nproc_per_node=8 run_eval.py > output.txt 2>&1
+# or evaluate all tasks
+bash eval_scripts.sh
+```
+All experiments were conducted on 8 × H200 GPUs with a global batch size of 4608.
+
+### ARC-AGI-1
 ```bash
 run_name="pretrain_att_arc1concept_8"
 torchrun --nproc-per-node 8 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
@@ -51,11 +42,9 @@ arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 
 ```
-
 *Runtime:* 15~16h
 
-### ARC-AGI-2 (8 × H200, global_batch_size=4608):
-
+### ARC-AGI-2
 ```bash
 run_name="pretrain_att_arc2concept_8"
 torchrun --nproc-per-node 8 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
@@ -66,11 +55,9 @@ arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 
 ```
-
 *Runtime:* 23~24h
 
-### Sudoku-Extreme (8 × H200, global_batch_size=18432):
-
+### Sudoku-Extreme:
 ```bash
 run_name="pretrain_mlp_t_sudoku"
 torchrun --nproc-per-node 8 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
@@ -95,11 +82,9 @@ arch.L_layers=2 \
 arch.H_cycles=3 arch.L_cycles=6 \
 +run_name=${run_name} ema=True
 ```
+*Runtime:* 40min
 
-*Runtime:* 30min
-
-### Maze-Hard (8 × H200, global_batch_size=4608):
-
+### Maze-Hard:
 ```bash
 run_name="pretrain_att_maze30x30"
 torchrun --nproc-per-node 4 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
@@ -112,11 +97,20 @@ arch.L_layers=2 \
 arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 ```
-
 *Runtime:* 2h
 
 ## Reproduction Results
 
+| Method | Params | Sudoku | Maze | ARC-1 (@2) | ARC-2 (@2) |
+| --- | --- | --- | --- | --- | --- |
+| TRM-Att | 7M | 77.73 | 78.70 | 38.50  | 3.33 |
+| TRM-MLP | 5M | 84.73 | / | / | / |
 
+In the first training run, I didn’t plot the pass@k curves — I’ll include them in the next updated results. For the ARC experiments, I have increased the number of training epochs, and the performance is expected to improve further.
 
-
+### Model Checkpoints on Hugging Face
+[TinyRecursiveModels-ARC-AGI-1](https://huggingface.co/Sanjin2024/TinyRecursiveModels-ARC-AGI-1)
+[TinyRecursiveModels-ARC-AGI-2](https://huggingface.co/Sanjin2024/TinyRecursiveModels-ARC-AGI-2)
+[TinyRecursiveModel-Maze-Hard](https://huggingface.co/Sanjin2024/TinyRecursiveModel-Maze-Hard)
+[TinyRecursiveModels-Sudoku-Extreme-att](https://huggingface.co/Sanjin2024/TinyRecursiveModels-Sudoku-Extreme-att)
+[TinyRecursiveModels-Sudoku-Extreme-mlp](https://huggingface.co/Sanjin2024/TinyRecursiveModels-Sudoku-Extreme-mlp)
