@@ -8,7 +8,7 @@ This repository is a reproduction and experimental verification of the paper “
 
 | Method | Params | Sudoku | Maze | ARC-1 (@2) | ARC-2 (@2) |
 | --- | --- | --- | --- | --- | --- |
-| TRM-Att | 7M | 77.71 | 78.70 | 38.50  | 3.33 |
+| TRM-Att | 7M | 77.71 | 78.70 | 41.00  | 3.33 |
 | TRM-MLP | 5M | 84.80 | / | / | / |
 
 In the first training run, I didn’t plot the pass@k curves — I’ll include them in the next updated results. For the ARC experiments, I have increased the number of training epochs, and the performance is expected to improve further.
@@ -48,30 +48,35 @@ All experiments were conducted on 8 × H200 GPUs with a global batch size of 460
 run_name="pretrain_att_arc1concept_8"
 torchrun --nproc-per-node 8 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
 arch=trm \
+epochs=200000  \
 data_paths="[data/arc1concept-aug-1000]" \
 arch.L_layers=2 \
 arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 
 ```
-*Runtime:* 15~16h
-<img width="1565" height="783" alt="image" src="https://github.com/user-attachments/assets/1cf6690a-a7f9-4d26-82c2-7a3335f8e9c8" />
-<img width="1565" height="1181" alt="image" src="https://github.com/user-attachments/assets/5895a506-7234-406d-abad-64c71f82c547" />
+*Runtime:* 37h
+<img width="1603" height="788" alt="image" src="https://github.com/user-attachments/assets/cf702613-969a-49a8-ad77-2d30df666485" />
+<img width="1597" height="786" alt="image" src="https://github.com/user-attachments/assets/c96a51cb-ab62-4adb-85ac-cf7c746fc8f7" />
+<img width="1600" height="1186" alt="image" src="https://github.com/user-attachments/assets/08d44b1a-3c11-4ffe-aa2e-3c996adfd3fa" />
+
 
 #### ARC-AGI-2
 ```bash
 run_name="pretrain_att_arc2concept_8"
 torchrun --nproc-per-node 8 --rdzv_backend=c10d --rdzv_endpoint=localhost:0 --nnodes=1 pretrain.py \
 arch=trm \
+epochs=200000  \
 data_paths="[data/arc2concept-aug-1000]" \
 arch.L_layers=2 \
 arch.H_cycles=3 arch.L_cycles=4 \
 +run_name=${run_name} ema=True
 
 ```
-*Runtime:* 23~24h
-<img width="1503" height="791" alt="image" src="https://github.com/user-attachments/assets/654d3954-3bca-4998-a005-0590bca8f011" />
-<img width="1502" height="1182" alt="image" src="https://github.com/user-attachments/assets/d17f5a1e-387b-4150-a5b6-3f2ff93f98d9" />
+*Runtime:* 49h
+<img width="1640" height="791" alt="image" src="https://github.com/user-attachments/assets/d2b7053c-676c-4dd2-a37f-78be331778e4" />
+<img width="1649" height="784" alt="image" src="https://github.com/user-attachments/assets/ed95c51f-4912-43d1-a17a-358d5234a78e" />
+<img width="1646" height="1187" alt="image" src="https://github.com/user-attachments/assets/c9b769a6-0ef7-49a5-843b-3c9426afb92d" />
 
 
 #### Sudoku-Extreme:
