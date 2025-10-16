@@ -41,7 +41,7 @@ torchrun --nproc_per_node=8 run_eval.py > output.txt 2>&1
 # or evaluate all tasks
 bash eval_scripts.sh
 ```
-All experiments were conducted on 8 × H200 GPUs with a global batch size of 4608.
+All experiments were conducted on 8 × H GPUs with a global batch size of 4608.
 
 #### ARC-AGI-1
 ```bash
