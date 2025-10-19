@@ -11,8 +11,6 @@ This repository is a reproduction and experimental verification of the paper “
 | TRM-Att | 7M | 77.71 | 78.70 | 41.00  | 3.33 |
 | TRM-MLP | 5M | 84.80 | / | / | / |
 
-In the first training run, I didn’t plot the pass@k curves — I’ll include them in the next updated results. For the ARC experiments, I have increased the number of training epochs, and the performance is expected to improve further.
-
 ### Model Checkpoints on Hugging Face
 [TinyRecursiveModel-Maze-Hard](https://huggingface.co/Sanjin2024/TinyRecursiveModel-Maze-Hard)
 
@@ -37,7 +35,7 @@ The file `pretrain.py` has been slightly modified to handle missing evaluators g
 
 In addition to evaluation during training, a standalone evaluation script `run_eval.py` has been added. This script allows loading checkpoints and running evaluation separately. We report exact accuracy for Maze and Sudoku, and pass@k for ARC.
 ```bash
-torchrun --nproc_per_node=8 run_eval.py > output.txt 2>&1
+torchrun --nproc_per_node=8 run_eval.py
 # or evaluate all tasks
 bash eval_scripts.sh
 ```
